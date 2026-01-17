@@ -1,0 +1,39 @@
+# Build and Release Folders
+bin-debug/
+bin-release/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+dist/
+dist-electron/
+out/
+
+# IDEs
+.vs/
+.vscode/
+*.user
+*.suo
+*.sln
+*.vcxproj
+*.filters
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# Project Specific
+*.node
+*.dll
+*.pdb
+*.exe
+app/
+clean_comments.py
