@@ -1,0 +1,33 @@
+:root {
+  /* Brand Palette - Solid Opaque Deep Theme */
+  --df-accent: #3B82F6;
+  --df-accent-glow: rgba(59, 130, 246, 0.5);
+  --df-success: #10B981;
+  --df-success-glow: rgba(16, 185, 129, 0.5);
+
+  /* Backgrounds - OPAQUE */
+  --df-bg-app: #0f172a;
+  /* Solid Slate 900 */
+  --df-bg-panel: #1e293b;
+  /* Solid Slate 800 */
+  --df-bg-input: #020617;
+  /* Solid Slate 950 */
+
+  /* Borders */
+  --df-border: #334155;
+  --df-border-heavy: #475569;
+
+  /* Text */
+  --df-text-main: #F8FAFC;
+  --df-text-muted: #94A3B8;
+
+  /* Utilities */
+  --glass-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+
+  /* Typography */
+  --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+
+  /* Transitions */
+  --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --duration-normal: 0.2s;
+}

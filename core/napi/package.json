@@ -1,0 +1,16 @@
+{
+    "name": "deepframe-native",
+    "version": "1.0.0",
+    "description": "Deep Frame native addon for Electron",
+    "main": "build/Release/deepframe_native.node",
+    "scripts": {
+        "install": "echo Skipping node-gyp, use npm run build",
+        "build": "cmake-js compile -G \"Visual Studio 18 2026\" -A x64 --runtime=electron --runtime-version=33.0.0",
+        "build:debug": "cmake-js compile -G \"Visual Studio 18 2026\" -A x64 -D --runtime=electron --runtime-version=33.0.0",
+        "clean": "cmake-js clean"
+    },
+    "dependencies": {
+        "cmake-js": "^7.3.0",
+        "node-addon-api": "^8.5.0"
+    }
+}

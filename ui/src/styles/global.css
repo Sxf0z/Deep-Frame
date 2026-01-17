@@ -1,0 +1,52 @@
+@import './tokens.css';
+@import './animations.css';
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-primary);
+    background: var(--df-bg-app);
+    /* Solid Opaque */
+    color: var(--df-text-main);
+    overflow: hidden;
+    user-select: none;
+    -webkit-font-smoothing: antialiased;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+}
+
+#root {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: var(--df-bg-app);
+    /* Rounded Corners with NO big shadow */
+    border-radius: 12px;
+    /* Subtle border to separate from desktop if needed, but frameless usually handles it.
+     Electron's 'hasShadow: true' handles the OS drop shadow.
+     We just clip the corners. */
+    overflow: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}
