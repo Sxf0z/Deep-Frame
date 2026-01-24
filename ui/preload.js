@@ -1,6 +1,4 @@
-
 const { contextBridge, ipcRenderer } = require('electron');
-
 
 contextBridge.exposeInMainWorld('deepframe', {
     initialize: () => ipcRenderer.invoke('deepframe:initialize'),
@@ -13,7 +11,6 @@ contextBridge.exposeInMainWorld('deepframe', {
     setShowStats: (show) => ipcRenderer.invoke('deepframe:setShowStats', show),
     setMode: (mode) => ipcRenderer.invoke('deepframe:setMode', mode),
 });
-
 
 contextBridge.exposeInMainWorld('windowControls', {
     minimize: () => ipcRenderer.send('window-minimize'),
