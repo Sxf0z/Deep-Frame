@@ -1,0 +1,11 @@
+/build/
+/.vs/
+*.exe
+*.pdb
+*.ilk
+*.obj
+*.tlog
+*.idb
+*.cso
+*.suo
+*.user
