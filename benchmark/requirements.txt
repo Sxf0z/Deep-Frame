@@ -1,0 +1,7 @@
+# Phase 0 benchmark harness
+PyYAML>=6.0
+psutil>=5.9
+nvidia-ml-py>=12.535.0
+numpy>=1.24
+opencv-python-headless>=4.8
+Pillow>=10.0

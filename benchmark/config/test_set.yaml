@@ -1,0 +1,79 @@
+# Phase 0 fixed test set — do not change IDs after baselines are recorded.
+# Clips/results are keyed by scenario_id.
+
+hardware:
+  notes: "Record nvidia-smi snapshot at each run; do not compare across GPUs."
+  expected_gpu_substring: "RTX 3050"
+
+# Wall-clock length of each timed capture session (seconds)
+session:
+  warm_up_s: 5
+  measure_s: 30
+  cooldown_s: 2
+
+# Default source lock guidance (match LSFG practice)
+source_lock:
+  recommendation: "Lock in-game FPS to half refresh (e.g. 30@60Hz, 60@144Hz) for x2 fairness."
+
+scenarios:
+  - id: idle_desktop
+    title: "Idle desktop (sanity)"
+    genre: control
+    window_hint: "Program Manager"
+    notes: "No game — validates harness FPS/GPU sampling only."
+    hard_case_tags: []
+
+  - id: browser_scroll
+    title: "Browser scroll (UI/text)"
+    genre: ui_heavy
+    window_hint: "Chrome|Edge|Firefox"
+    notes: "High-frequency text; HUD stability proxy."
+    hard_case_tags: [hud_text]
+
+  - id: roblox_motion
+    title: "Roblox — free look / movement"
+    genre: fast_3d
+    window_hint: "Roblox"
+    notes: "Primary live target used by prior DeepFrame experiments."
+    hard_case_tags: [fast_pan, disocclusion]
+
+  - id: strategy_ui
+    title: "Strategy / overlay-heavy title"
+    genre: ui_heavy
+    window_hint: ""
+    notes: "Pick any title with dense HUD; update window_hint when chosen."
+    hard_case_tags: [hud_text, particles]
+
+  - id: narrative_slow
+    title: "Slow narrative / cutscene-like motion"
+    genre: slow
+    window_hint: ""
+    notes: "Low motion baseline for quality (should be easy)."
+    hard_case_tags: []
+
+# Offline RIFE path uses these clip folders under benchmark/hard_case_reel/clips/
+hard_case_categories:
+  - id: fast_pan
+    description: "Large FOV swings / camera pans"
+  - id: hud_text
+    description: "Thin high-contrast UI, subtitles, crosshairs"
+  - id: particles
+    description: "Smoke, sparks, magic, weather"
+  - id: disocclusion
+    description: "Objects revealing background (walk past pillars, etc.)"
+  - id: mixed
+    description: "Combination stress scenes"
+
+baselines:
+  lsfg:
+    install_path_hint: "C:/Program Files (x86)/Steam/steamapps/common/Lossless Scaling"
+    modes: [x2, x3, x4]
+    notes: "GUI tool — use PresentMon + protocol in protocols/lsfg_manual.md"
+  rife_ncnn:
+    binary_relpath: "third_party/rife-ncnn-vulkan/rife-ncnn-vulkan.exe"
+    model: rife-v4.6
+    modes: [x2]  # offline video: double frames via -n
+    notes: "Offline quality/latency reference, not live capture FG"
+  deepframe_legacy:
+    binary_relpath: "build/Release/DeepFrame.exe"
+    notes: "Classical SAD warp baseline only — not a quality target"

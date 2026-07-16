@@ -9,3 +9,32 @@
 *.cso
 *.suo
 *.user
+
+# Phase 0+ tooling
+/.venv/
+/third_party/
+
+# Do not publish extracted LSFG proprietary weight blobs (legal / IP)
+/re_lsfg/
+/benchmark/results/
+/benchmark/hard_case_reel/clips/**/*.mp4
+/benchmark/hard_case_reel/clips/**/*.mkv
+/benchmark/hard_case_reel/clips/**/*.mov
+/benchmark/hard_case_reel/clips/**/*.avi
+/benchmark/hard_case_reel/clips/**/*.webm
+!/benchmark/hard_case_reel/clips/**/.gitkeep
+
+# Data / training artifacts
+/data/raw/
+/data/processed/
+/data/cache/
+/models/**/*.pt
+/models/**/*.pth
+/models/**/*.onnx
+/models/**/*.engine
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.log

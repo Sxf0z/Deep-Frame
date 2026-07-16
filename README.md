@@ -1,30 +1,64 @@
-# AeroScale (LSFG-Killer) — Real-Time Frame Generation & Spatial Upscaler
+# Deep Frame — Real-Time Capture-Based Frame Generation
 
-AeroScale is a low-level Windows system utility designed to outperform existing overlay and injection-free frame generation solutions. By eliminating CPU-GPU memory roundtrips and utilizing hardware-level silicon primitives, AeroScale executes spatial upscaling and frame interpolation (X2/X3) in under 2 milliseconds per frame, maintaining a GPU overhead below 5%.
+Target: capture-based VFI competitive with LSFG on quality / latency / stability, without swapchain hooking.
 
-This repository layout and documentation tree are optimized for AI-driven Vibe Coding workflows using the Model Context Protocol (MCP) and Claude 5 Fable.
+| Doc | Purpose |
+|-----|---------|
+| [`PROJECT_CONTEXT.md`](PROJECT_CONTEXT.md) | Architecture decisions, constraints, codebase audit |
+| [`BUILD_PLAN.md`](BUILD_PLAN.md) | Phased plan — **do not skip Phase 0** |
+| [`benchmark/README.md`](benchmark/README.md) | Phase 0 harness |
 
----
+## Current phase: **0 — Baseline & Benchmark Harness**
 
-## Technical Performance Matrix
+Do **not** start model training (Phase 1–2) until Phase 0 acceptance is green (or gaps are explicitly waived in `benchmark/results/PHASE0_STATUS.md`).
 
-| Feature | Lossless Scaling (LSCF) | AeroScale (Target Architecture) |
-| :--- | :--- | :--- |
-| **VRAM Bandwidth** | Intermediate (Separate shader passes) | **Strict Zero-Copy** (Single-pass fused EASU/RCAS) |
-| **Optical Flow Engine** | Generic compute shaders / Dense interpolation | **Hardware-accelerated msad4** intrinsic operations |
-| **Frame Pacing Precision** | Legacy `timeBeginPeriod` (OS non-deterministic) | **NT Kernel High-Resolution Waitable Timers** (~0.1ms) |
-| **Overlay Latency** | DXGI Swapchain (DWM synchronization lag) | **DirectComposition (DComp)** without redirection buffers |
+### Environment
 
----
+```bat
+cd "C:\Users\safwa\Desktop\Deep Frame Project"
+:: Use project venv (required — system Python may be hermes/uv-managed)
+.\.venv\Scripts\python.exe -m pip install -r benchmark\requirements.txt
+.\.venv\Scripts\python.exe -m benchmark.run_phase0 --bootstrap --status
+```
 
-## Repository Structure (Knowledge Base)
+### Tools already detected / installed
 
-The architectural specifications are segmented into five core modules located in the `docs/` directory. These files supply the persistent context required by autonomous code generation agents:
+| Tool | Status |
+|------|--------|
+| RTX 3050 Ti + NVML | Yes |
+| ffmpeg / ffprobe | Yes |
+| rife-ncnn-vulkan | `third_party/rife-ncnn-vulkan/` |
+| PresentMon Console | winget `Intel.PresentMon.Console` (needs **Admin** or *Performance Log Users* for ETW) |
+| Lossless Scaling (LSFG) | Steam install present |
 
-```text
-📂 docs/
-├── 📄 01_architecture_capture.md  # Thread-free WGC capture, Zero-Copy via IDirect3DDxgiInterfaceAccess.
-├── 📄 02_compute_shaders.md       # HLSL Single-Pass (EASU + RCAS fusion), Wave Intrinsics (SM 6.2).
-├── 📄 03_optical_flow_fg.md       # Hierarchical Block Matching accelerated by hardware 'msad4' primitives.
-├── 📄 04_memory_management.md     # Static resource graph (Zero allocations inside the Main Render Loop).
-└── 📄 05_ui_and_overlay.md        # Borderless WS_EX_NOREDIRECTIONBITMAP window and DirectComposition tree.
+### Complete remaining Phase 0 gaps (human)
+
+1. **PresentMon privileges** — see `benchmark/protocols/presentmon_privileges.md`
+2. **LSFG baseline session** — see `benchmark/protocols/lsfg_manual.md`  
+   ```bat
+   .\.venv\Scripts\python.exe -m benchmark.session_capture --scenario roblox_motion --label lsfg_x2 --presentmon third_party\PresentMon\PresentMon.exe --process RobloxPlayerBeta.exe
+   ```
+3. **Real hard-case clips** (replace synthetics):
+   ```bat
+   .\.venv\Scripts\python.exe -m benchmark.hard_case_reel ingest --video path\to\clip.mp4 --category fast_pan --title "..." --source-app Roblox
+   ```
+4. Re-check: `.\.venv\Scripts\python.exe -m benchmark.report`
+
+### Legacy classical-flow app
+
+Prior vibe-coded **DeepFrame** (SAD block-match + single warp) remains under `src/` / `build/`. It is a systems reference only, not the quality target — see audit in `PROJECT_CONTEXT.md` §4.
+
+## Repo layout (build plan)
+
+```
+benchmark/   Phase 0 harness + hard-case reel
+data/        Phase 1 (blocked)
+models/      Phase 2–3
+training/    Phase 2
+export/      Phase 3
+capture/     Phase 4
+present/     Phase 4–5
+controller/  Phase 6
+eval/        Phase 2+ metrics
+src/         Legacy DeepFrame C++ (WGC + classical FG)
+```

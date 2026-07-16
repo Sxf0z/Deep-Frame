@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "description": "Labeled hard-case clips for visual + metric evaluation. Populate via gameplay capture; synthetic clips are smoke-only.",
+  "clips": [
+    {
+      "id": "syn_fast_pan",
+      "path": "benchmark/hard_case_reel/clips/fast_pan/synthetic_fast_pan.mp4",
+      "category": "fast_pan",
+      "title": "Synthetic rotating source (pan proxy)",
+      "source_app": "ffmpeg_lavfi",
+      "tags": [
+        "fast_pan",
+        "synthetic"
+      ],
+      "notes": "Smoke-test placeholder \u2014 replace with real gameplay captures.",
+      "synthetic": true,
+      "added_utc": "2026-07-16T16:22:43.708486+00:00"
+    },
+    {
+      "id": "syn_hud_text",
+      "path": "benchmark/hard_case_reel/clips/hud_text/synthetic_hud_text.mp4",
+      "category": "hud_text",
+      "title": "Synthetic solid + box HUD (font-free)",
+      "source_app": "ffmpeg_lavfi",
+      "tags": [
+        "hud_text",
+        "synthetic"
+      ],
+      "notes": "Smoke-test placeholder \u2014 replace with real gameplay captures.",
+      "synthetic": true,
+      "added_utc": "2026-07-16T16:22:44.537303+00:00"
+    },
+    {
+      "id": "syn_particles",
+      "path": "benchmark/hard_case_reel/clips/particles/synthetic_particles.mp4",
+      "category": "particles",
+      "title": "Synthetic noise particles proxy",
+      "source_app": "ffmpeg_lavfi",
+      "tags": [
+        "particles",
+        "synthetic"
+      ],
+      "notes": "Smoke-test placeholder \u2014 replace with real gameplay captures.",
+      "synthetic": true,
+      "added_utc": "2026-07-16T16:22:59.855361+00:00"
+    },
+    {
+      "id": "syn_disocclusion",
+      "path": "benchmark/hard_case_reel/clips/disocclusion/synthetic_disocclusion.mp4",
+      "category": "disocclusion",
+      "title": "Synthetic moving crop (disocclusion proxy)",
+      "source_app": "ffmpeg_lavfi",
+      "tags": [
+        "disocclusion",
+        "synthetic"
+      ],
+      "notes": "Smoke-test placeholder \u2014 replace with real gameplay captures.",
+      "synthetic": true,
+      "added_utc": "2026-07-16T16:23:01.430783+00:00"
+    }
+  ]
+}
